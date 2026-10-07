@@ -48,7 +48,7 @@ const server = http
             break;
 
           default:
-            res.write(pug.renderFile('form_top'));
+            res.write(pug.renderFile('form_top.pug'));
             break;
         }
         res.end();
