@@ -1,13 +1,26 @@
 'use strict';
 const http = require('node:http');
-const fs = require('node:fs');
 const pug = require('pug');
+const auth =require('http-auth');
+const basic=auth.basic(
+  {realm:'Enquetes Area'},
+  (username, password, callback)=>{
+    callback(username=='guest'&&password==='xaXZJQmE');
+  }
+);
 const server = http
-  .createServer((req, res) => {
+  .createServer(basic.check((req, res) => {
     const now = new Date();
     console.info(
       `[${now}] Requested by ${req.socket.remoteAddress}`
     );
+    if(req.url==='/logout'){
+      res.writeHead(401,{
+        'Content-Type':'text/html; charset=utf-8'
+      });
+      res.end('ログアウトしました');
+      return;
+    }
     res.writeHead(200, {
       'Content-Type': 'text/html; charset=utf-8'
     });
@@ -49,14 +62,15 @@ const server = http
               secondItem: 'ピザ'
             }));
             break;
+
           case '/enquetes/dog-cat' :
             res.write(pug.renderFile('form.pug',{
               path: req.url,
               question: 'どちらが好きですか',
               firstItem: '犬',
               secondItem: '猫'
-            }))
-
+            }));
+            break;
           default:
             res.write(pug.renderFile('form_top.pug'));
             break;
@@ -92,7 +106,7 @@ const server = http
         break;
 
     }
-  })
+  }))
   .on('error', e => {
     console.error(`[${new Date()}] Server Error`, e);
   })
