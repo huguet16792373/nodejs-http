@@ -26,6 +26,7 @@ const server = http
           case '/enquetes/yaki-tofu':
             res.write(pug.renderFile('form.pug', {
               path: req.url,
+              question: 'どちらが食べたいですか',
               firstItem: '焼肉',
               secondItem: '湯豆腐'
             }));
@@ -34,6 +35,7 @@ const server = http
           case '/enquetes/rice-bread':
             res.write(pug.renderFile('form.pug', {
               path: req.url,
+              question: 'どちらが食べたいですか',
               firstItem: 'ご飯',
               secondItem: 'パン'
             }));
@@ -42,10 +44,18 @@ const server = http
           case '/enquetes/sushi-pizza':
             res.write(pug.renderFile('form.pug', {
               path: req.url,
+              question: 'どちらが食べたいですか',
               firstItem: '寿司',
               secondItem: 'ピザ'
             }));
             break;
+          case 'enquetes/dog-cat' :
+            res.write(pug.renderFile('form.pug',{
+              path: req.url,
+              question: 'どちらが好きですか',
+              firstItem: '犬',
+              secondItem: '猫'
+            }))
 
           default:
             res.write(pug.renderFile('form_top.pug'));
