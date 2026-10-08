@@ -49,7 +49,7 @@ const server = http
               secondItem: 'ピザ'
             }));
             break;
-          case 'enquetes/dog-cat' :
+          case '/enquetes/dog-cat' :
             res.write(pug.renderFile('form.pug',{
               path: req.url,
               question: 'どちらが好きですか',
